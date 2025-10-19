@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace AppSorvesanWeb.Models;
 
@@ -21,5 +22,6 @@ public partial class ItensPedido
 
     public DateTimeOffset CriadoEm { get; set; }
 
+    [JsonIgnore]
     public virtual Pedido Pedido { get; set; } = null!;
 }

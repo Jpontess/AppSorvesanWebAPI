@@ -21,6 +21,8 @@ namespace AppSorvesanWeb
             // Nova instancia será criada para cada requisição http.
             builder.Services.AddScoped<IPedidoService, PedidoService>();
 
+            builder.Services.AddScoped<IItemPedidoService, ItemPedidoService>(); 
+
            
 
             builder.Services.AddControllers();

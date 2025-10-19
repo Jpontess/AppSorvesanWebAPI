@@ -18,19 +18,25 @@ public class PedidoService : IPedidoService
         _context = context;
     }
 
-    public async  Task<IEnumerable<Pedido>> GetPedidos()
+    public async  Task<IEnumerable<PedidoResumoDTO>> GetPedidos()
     {
-        var pedido = await _context.Pedidos.ToListAsync();
+        var pedido = await _context.Pedidos
+            .OrderByDescending(p => p.CriadoEm)
+            .Select(p => new PedidoResumoDTO
+            {
+                Id = p.Id,
+                NumeroPedido = p.NumeroPedido,
+                NomeCliente = p.NomeCliente,
+                Status = p.Status,
+                ValorTotal = p.ValorTotal,
+                CriadoEm = p.CriadoEm
+            })
+            .ToListAsync();
 
-        return (pedido);
+        return pedido;
     }
 
-    public async Task<Pedido?> PedidoPorId(Guid id)
-    {
-        var pedidos = await _context.Pedidos.FindAsync(id);
 
-        return (pedidos);
-    }
 
     public async Task<Pedido> CriarPedido(PedidosCreateDTOs pedidosCreate)
     {
@@ -81,5 +87,40 @@ public class PedidoService : IPedidoService
         _context.Pedidos.Update(pedido);
         await _context.SaveChangesAsync();
         return pedido;
+    }
+
+    public async Task<PedidoDetalhesDTO?> GetPedidoPorId(Guid id)
+    {
+        var pedidoComItens = await _context.Pedidos
+            .Include(p => p.ItensPedidos)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if(pedidoComItens == null)
+        {
+            return null;
+        }
+
+        var pedidoDto = new PedidoDetalhesDTO
+        {
+            Id = pedidoComItens.Id,
+            NumeroDoPedido = pedidoComItens.NumeroPedido,
+            NomeDoCliente = pedidoComItens.NomeCliente,
+            TelefoneDoCliente = pedidoComItens.TelefoneCliente,
+            Observacoes = pedidoComItens.Observacoes,
+            Status = pedidoComItens.Status,
+            ValorTotal = pedidoComItens.ValorTotal,
+            CriadoEm = pedidoComItens.CriadoEm,
+
+            Itens = pedidoComItens.ItensPedidos.Select(item => new ItemPedidoDTO
+            {
+                Id = item.Id,
+                NomeProduto = item.NomeProduto,
+                Quantidade = item.Quantidade,
+                Preco = item.Preco,
+                Customizacoes = item.Customizacoes,
+            }).ToList()
+        };
+
+        return pedidoDto;
     }
 }

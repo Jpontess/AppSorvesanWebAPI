@@ -9,7 +9,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AppSorvesanWeb.Models.Pedido, AppSorvesanWeb, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AppSorvesanWeb.DTOs.PedidoResumoDTO, AppSorvesanWeb, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -47,7 +47,7 @@
   },
   {
     "ContainingType": "AppSorvesanWeb.Controllers.PedidosController",
-    "Method": "PedidosPorId",
+    "Method": "GetPedidosPorId",
     "RelativePath": "Pedidos/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -103,6 +103,27 @@
       {
         "Name": "pedido",
         "Type": "AppSorvesanWeb.DTOs.AtualizarPedidoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppSorvesanWeb.Controllers.ItemPedidoController",
+    "Method": "AdicionarItem",
+    "RelativePath": "pedidos/{pedidoId}/Itens",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pedidoId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "itemDto",
+        "Type": "AppSorvesanWeb.DTOs.ItemPedidoDTO",
         "IsRequired": true
       }
     ],

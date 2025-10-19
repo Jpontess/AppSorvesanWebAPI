@@ -17,7 +17,7 @@ public class PedidosController : Controller
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Pedido>>> ListaDePedidos()
+    public async Task<ActionResult<IEnumerable<PedidoResumoDTO>>> ListaDePedidos()
     {
         var pedidos = await _pedidoService.GetPedidos();
 
@@ -25,9 +25,9 @@ public class PedidosController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Pedido>> PedidosPorId(Guid id)
+    public async Task<ActionResult<Pedido>> GetPedidosPorId(Guid id)
     {
-        var pedidos = await _pedidoService.PedidoPorId(id);
+        var pedidos = await _pedidoService.GetPedidoPorId(id);
         if (pedidos == null)
         {
             return NotFound();
@@ -46,7 +46,7 @@ public class PedidosController : Controller
         try
         {
             var pedidoCriado = await _pedidoService.CriarPedido(pedidos);
-            return CreatedAtAction(nameof(PedidosPorId), new { id = pedidoCriado.Id }, pedidoCriado );
+            return CreatedAtAction(nameof(GetPedidosPorId), new { id = pedidoCriado.Id }, pedidoCriado );
         }
         catch (Exception ex)
         {

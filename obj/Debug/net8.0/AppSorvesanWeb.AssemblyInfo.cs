@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AppSorvesanWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac38a661369adbb9ff7ec626ae239e35fc7d64fa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+671da0dc956e0a23e7896fadc9d217a87f476ffb")]
 [assembly: System.Reflection.AssemblyProductAttribute("AppSorvesanWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AppSorvesanWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

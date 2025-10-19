@@ -5,6 +5,48 @@
     "version": "1.0"
   },
   "paths": {
+    "/pedidos/{pedidoId}/Itens": {
+      "post": {
+        "tags": [
+          "ItemPedido"
+        ],
+        "parameters": [
+          {
+            "name": "pedidoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemPedidoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemPedidoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemPedidoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Pedidos": {
       "get": {
         "tags": [
@@ -18,7 +60,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pedido"
+                    "$ref": "#/components/schemas/PedidoResumoDTO"
                   }
                 }
               },
@@ -26,7 +68,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pedido"
+                    "$ref": "#/components/schemas/PedidoResumoDTO"
                   }
                 }
               },
@@ -34,7 +76,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pedido"
+                    "$ref": "#/components/schemas/PedidoResumoDTO"
                   }
                 }
               }
@@ -212,6 +254,32 @@
         },
         "additionalProperties": false
       },
+      "ItemPedidoDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nomeProduto": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantidade": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "preco": {
+            "type": "number",
+            "format": "double"
+          },
+          "customizacoes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ItensPedido": {
         "type": "object",
         "properties": {
@@ -242,9 +310,6 @@
           "criadoEm": {
             "type": "string",
             "format": "date-time"
-          },
-          "pedido": {
-            "$ref": "#/components/schemas/Pedido"
           }
         },
         "additionalProperties": false
@@ -300,6 +365,36 @@
               "$ref": "#/components/schemas/ItensPedido"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PedidoResumoDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "numeroPedido": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomeCliente": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "valorTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "criadoEm": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
